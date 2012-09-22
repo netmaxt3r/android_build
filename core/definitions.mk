@@ -1606,6 +1606,14 @@ $(hide) (cd $(dir $@) && zip -r $(notdir $@) lib)
 $(hide) rm -rf $(dir $@)lib
 endef
 
+define add-x-resources-to-package
+$(hide) rm -rf $(dir $@)xres
+$(hide) mkdir -p $(dir $@)xres
+$(hide) cp -r $(PRIVATE_X_JAVA_RESOURCE_DIRS)/* $(dir $@)xres
+$(hide) (cd $(dir $@)xres && zip -r ../$(notdir $@) *)
+$(hide) rm -rf $(dir $@)xres
+endef
+
 #TODO: update the manifest to point to the dex file
 define add-dex-to-package
 $(if $(filter classes.dex,$(notdir $(PRIVATE_DEX_FILE))),\

@@ -363,6 +363,7 @@ $(LOCAL_BUILT_MODULE): $(DEXPREOPT_BOOT_ODEXS) | $(DEXPREOPT) $(DEXOPT)
 endif
 $(LOCAL_BUILT_MODULE): PRIVATE_JNI_SHARED_LIBRARIES := $(jni_shared_libraries)
 $(LOCAL_BUILT_MODULE): PRIVATE_JNI_SHARED_LIBRARIES_ABI := $(jni_shared_libraries_abi)
+$(LOCAL_BUILT_MODULE): PRIVATE_X_JAVA_RESOURCE_DIRS := $(LOCAL_PATH)/$(LOCAL_X_JAVA_RESOURCE_DIR)
 ifneq ($(TARGET_BUILD_APPS),)
     # Include all resources for unbundled apps.
     LOCAL_AAPT_INCLUDE_ALL_RESOURCES := true
@@ -380,6 +381,9 @@ $(LOCAL_BUILT_MODULE): $(all_res_assets) $(jni_shared_libraries) $(full_android_
 	$(add-assets-to-package)
 ifneq ($(jni_shared_libraries),)
 	$(add-jni-shared-libs-to-package)
+endif
+ifneq ($(LOCAL_X_JAVA_RESOURCE_DIR),)
+	$(add-x-resources-to-package)
 endif
 ifneq ($(full_classes_jar),)
 	$(add-dex-to-package)
